@@ -11,4 +11,8 @@ runs:
       id: gh-pages-branch-creation
       run: bash $GITHUB_ACTION_PATH/orphan-branch.sh
       shell: bash
+    - name: setting the committer name and email
+      id: committer-name-email
+      run: bash $GITHUB_ACTION_PATH/set-committer.sh
+      shell: bash
 
