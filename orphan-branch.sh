@@ -7,7 +7,7 @@ if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
    git reset --hard
    git commit --allow-empty -m "First commit to create gh-pages branch"
    git push origin gh-pages
-   git checkout ${{steps.branch_name.outputs.SOURCE_NAME}}
+   git checkout main
    echo "Created gh-pages branch"
 else
    echo "Branch gh-pages already exists"
