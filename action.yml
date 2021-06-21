@@ -9,6 +9,6 @@ runs:
   steps:
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
-      run: $GITHUB_ACTION_PATH/orphan-branch.sh
+      run: bash $GITHUB_ACTION_PATH/orphan-branch.sh
       shell: bash
 
