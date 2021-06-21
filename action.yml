@@ -9,10 +9,10 @@ runs:
   steps:
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
-      run: bash $GITHUB_ACTION_PATH/orphan-branch.sh
+      run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
       shell: bash
     - name: setting the committer name and email
       id: committer-name-email
-      run: bash $GITHUB_ACTION_PATH/set-committer.sh
+      run: bash $GITHUB_ACTION_PATH/set_committer.sh
       shell: bash
 
