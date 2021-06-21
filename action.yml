@@ -1,0 +1,14 @@
+name: 'Sphinx docs to GitHub Pages'
+description: 'Automatic Sphinx html docs compilation and deployment through the gh-pages branch.'
+author: "Diego Prada"
+branding:
+  icon: "upload-cloud"
+  color: "orange"
+runs:
+  using: "composite"
+  steps:
+    - name: gh-pages branch creation if needed
+      id: gh-pages-branch-creation
+      run: $GITHUB_ACTION_PATH/orphan-branch.sh
+      shell: bash
+
