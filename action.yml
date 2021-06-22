@@ -46,9 +46,20 @@ runs:
     - name: pushing to gh-pages
       shell: bash
       run: |
+        echo ::group::Create README for gh-pages
+        SHA="$(echo ${GITHUB_SHA}"
+        if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
+            GITHUB_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+        fi
+        SHORT_SHA="$(echo ${SHA} | git rev-parse --short)"
+        echo "#GitHub Pages" > docs/_build/html/README.md
+        echo "" >> docs/_build/html/README.md
+        echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> docs/_build/html/README.md
+        cat docs/_build/html/README.md
+        echo ::endgroup::
         echo ::group::Push to gh-pages
         git add -f docs/_build/html
-        git commit -m "From XXX"
+        git commit -m "From $GITHUB_REF ${{ steps.committer.outputs.short_sha }}"
         git push origin `git subtree split --prefix docs/_build/html main`:gh-pages --force
         echo ::endgroup::
 
