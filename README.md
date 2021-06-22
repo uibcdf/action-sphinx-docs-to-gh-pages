@@ -1,15 +1,120 @@
 # action-sphinx-docs-to-gh-pages
-GitHub Action: sphinx docs compilation, testing and deployment to github pages through the gh-pages branch.
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
+The sphinx documentation in a repository is automatically compiled as 'html' and deployed, by means
+of a gh-pages branch, with this GitHub Action. The user has only to be sure that the repository
+accomplishes a couple of requirements.
+
+This GitHub Action was developed by [the Computational Biology and Drug Design Research Unit -UIBCDF- at the
+Mexico City Children's Hospital Federico Gómez](https://www.uibcdf.org/). Other GitHub Actions can
+be found at [the UIBCDF GitHub site](https://github.com/search?q=topic%3Agithub-actions+org%3Auibcdf&type=Repositories).
 
 ## Requirements
 
-The following requirements are part of the common practices in the UIBCDF repositories, but they
-are mentioned here for the sake of clarity:
+### GitHub Pages taking the source from the branch gh-pages
 
-- The principle branch in the repository is named "main".
-- The sphinx
+Once this GitHub action runned for first time, make sure that GitHub Pages is taking the web source
+code from the branch 'gh-pages'. In the github repository go to 'Settings -> Pages -> Source' and
+check that no other branch is selected as source.
 
-## Use
+### A Yaml file to create a conda environment with docs compilation dependencies
+
+The compilation of your sphinx documentation requires dependencies that can be solved with a
+temporary conda environment. Make sure that the repository has a Yaml file with the details to make
+this environment (see the section ["Documentation conda environment"][#Documentation-conda-environment]). 
+
+## How to use it
+
+To include this GitHub Action in your repository, put a yaml file (named 'sphinx\_docs\_to\_gh\_pages.yaml', for instance) with the following content in the
+directory '.github/workflows':
+
+```yaml
+name: Sphinx docs to gh-pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  sphinx_docs_to_gh-pages:
+    runs-on: ubuntu-latest
+    name: Sphinx docs to gh-pages
+    steps:
+      - uses: actions/checkout@v2
+      - name: Make conda environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
+          activate-environment: docs
+          auto-update-conda: false
+          auto-activate-base: false
+          show-channel-urls: true
+      - name: Running the Sphinx to gh-pages Action
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@0.0.1-beta.25
+          with:
+            branch: main
+            dir_docs: docs
+            sphinxopts: ''
+```
+
+Two things need to be known to run the GitHub Actions without further work: the meaning of the input parameters
+and the environment file to make a temporary conda environment where the sphinx documentation can
+be compiled.
+
+### Input parameters
+
+| Input parameters | Description | Default value | 
+| ---------------- | ------------------------------------------- | ------------------------------------------------------ |
+| branch | Name of the branch where the sphinx documentation is located | 'main' |
+| dir\_docs | Path where the sphinx documentation is located | 'docs' |
+| sphinxopts | Compilation options for sphinx-build | '' |
+
+### Documentation conda environment
+
+The sphinx documentation will need specific libraries and packages to be compiled. They can be
+specified in a conda environment file. This way, a temporary enviroment can be made and activated
+to compile the documentation with all dependencies satisfied. Write a file in the repository with
+the following content:
+
+```yaml
+name: docs
+
+channels:
+
+  - conda-forge
+  - defaults
+
+dependencies:
+
+  # Write here all dependencies to compile the sphinx documentation.
+  # This list is just an example
+  - python=3.7
+  - sphinx
+  - sphinx_rtd_theme
+  - sphinxcontrib-bibtex
+  - nbsphinx
+  - recommonmark
+  - sphinx-markdown-tables
+```
+
+And replace the corresponding input parameter with the right path to the conda enviroment file. In
+the case of [the above workflow example](#How-to-use-it) ('devtools/conda-envs/docs\_env.yaml'):
+
+```yaml
+jobs:
+  sphinx_docs_to_gh-pages:
+    steps:
+      - name: Make conda environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
+```
 
 ## Other tools like this one
 

@@ -6,11 +6,11 @@ branding:
   color: "orange"
 inputs:
   branch:
-    description: Name of branch where sphinx documentation is located
+    description: Name of the branch where the sphinx documentation is located
     required: false
     default: 'main'
   dir_docs:
-    description: Path where sphinx documentation is located
+    description: Path where the sphinx documentation is located
     required: false
     default: 'docs'
   sphinxopts:
