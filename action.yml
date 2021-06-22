@@ -49,6 +49,6 @@ runs:
         echo ::group::Push to gh-pages
         git add -f docs/_build/html
         git commit -m "From XXX"
-        git push origin `git subtree split --prefix docs/_build/html master`:gh-pages --force
+        git push origin `git subtree split --prefix docs/_build/html main`:gh-pages --force
         echo ::endgroup::
 
