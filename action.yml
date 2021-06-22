@@ -16,7 +16,7 @@ runs:
          EMAIL: ${{ steps.committer.outputs.email }}
     - name: chequeo
       id: chequeo
-      run: echo ${{ committer.NAME }}
+      run: echo ${{ steps.committer.NAME }}
       shell: bash
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
