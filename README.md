@@ -24,7 +24,7 @@ be found at [the UIBCDF GitHub site](https://github.com/search?q=topic%3Agithub-
 ### GitHub Pages taking the source from the branch gh-pages
 
 There is no need to have a 'gh-pages' branch already in the repository. This action will create it
-for you. Buth once this GitHub action runned for first time, make sure that GitHub Pages is taking the web source
+for you. But once this GitHub action runned for first time, make sure that GitHub Pages is taking the web source
 code from the branch 'gh-pages'. In the github repository go to 'Settings -> Pages -> Source' and
 check that no other branch is selected as source.
 
