@@ -23,11 +23,11 @@ check that no other branch is selected as source.
 
 The compilation of your sphinx documentation requires dependencies that can be solved with a
 temporary conda environment. Make sure that the repository has a Yaml file with the details to make
-this environment (see the section ["Documentation conda environment"](#Documentation-conda-environment). 
+this environment (see the section ["Documentation conda environment"](#Documentation-conda-environment)). 
 
 ## How to use it
 
-To include this GitHub Action, put a yaml file (named 'sphinx\_docs\_to\_gh\_pages.yaml', for instance) with the following content in the
+To include this GitHub Action, put a Yaml file (named 'sphinx\_docs\_to\_gh\_pages.yaml', for instance) with the following content in the
 directory '.github/workflows' of your repository:
 
 ```yaml
@@ -119,8 +119,8 @@ dependencies:
   - sphinx-markdown-tables
 ```
 
-And replace the corresponding input parameter with the right path to the conda enviroment file. In
-the case of [the above workflow example](#How-to-use-it) ('devtools/conda-envs/docs\_env.yaml'):
+And replace the value of the workflow input parameter `environment-file:` with the right path to your documentation conda enviroment file. In
+the case of [the above example](#How-to-use-it) ('devtools/conda-envs/docs\_env.yaml'):
 
 ```yaml
 jobs:
@@ -129,12 +129,13 @@ jobs:
       - name: Make conda environment
         uses: conda-incubator/setup-miniconda@v2
         with:
-          environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
+          # Replace with the path to your documentation conda enviroment file
+          environment-file: devtools/conda-envs/docs_env.yaml
 ```
 
 ## Other tools like this one
 
-This GitHub Action was developed to solve a need of the UIBCDF. Additionally, it is an example of
+This GitHub Action was developed to solve a need of the [UIBCDF]((https://www.uibcdf.org/)). And to be used, additionally, as example of
 house-made GitHub Action for researchers and students in this lab.
 
 Other tools you can find in the market doing these same tasks are mentioned below. We recognize and
