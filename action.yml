@@ -7,15 +7,15 @@ branding:
 inputs:
   branch:
     description: Name of branch where sphinx documentation is located
-    required: true
+    required: false
     default: 'main'
   dir_docs:
     description: Path where sphinx documentation is located
-    required: true
+    required: false
     default: 'docs'
   sphinxopts:
     description: Compilation options for sphinx-build
-    required: true
+    required: false
     default: ''
 
 runs:
