@@ -7,6 +7,14 @@ The sphinx documentation in a repository is automatically compiled as 'html' and
 of the 'gh-pages' branch, with this GitHub Action. The user has only to be sure that the repository
 accomplishes [a couple of requirements](#Requirements).
 
+In summary, this GitHub action does the following:
+
+- Takes the author and SHA id of the trigger action ('push' or 'pull request') to be consistent
+  along the action.
+- Creates a new 'gh-pages' branch if this is not already in the repository.
+- Compiles the sphinx documentation in the directory and branch specified by the user.
+- Pushes the output html documentation to the 'gh-pages' branch.
+
 This GitHub Action was developed by [the Computational Biology and Drug Design Research Unit -UIBCDF- at the
 Mexico City Children's Hospital Federico Gómez](https://www.uibcdf.org/). Other GitHub Actions can
 be found at [the UIBCDF GitHub site](https://github.com/search?q=topic%3Agithub-actions+org%3Auibcdf&type=Repositories).
@@ -15,7 +23,8 @@ be found at [the UIBCDF GitHub site](https://github.com/search?q=topic%3Agithub-
 
 ### GitHub Pages taking the source from the branch gh-pages
 
-Once this GitHub action runned for first time, make sure that GitHub Pages is taking the web source
+There is no need to have a 'gh-pages' branch already in the repository. This action will create it
+for you. Buth once this GitHub action runned for first time, make sure that GitHub Pages is taking the web source
 code from the branch 'gh-pages'. In the github repository go to 'Settings -> Pages -> Source' and
 check that no other branch is selected as source.
 
