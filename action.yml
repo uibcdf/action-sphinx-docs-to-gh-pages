@@ -15,4 +15,12 @@ runs:
       id: gh-pages-branch-creation
       run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
       shell: bash
+    - name: sphinx html docs compilation
+      working-directory: ./docs
+      run: bash $GITHUB_ACTION_PATH/sphinx.sh
+      shell: bash
+    - name: pushing to gh-pages
+      working-directory: ./docs
+      run: bash $GITHUB_ACTION_PATH/to_gh-pages.sh
+      shell: bash
 
