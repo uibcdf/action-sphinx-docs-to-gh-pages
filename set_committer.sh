@@ -1,9 +1,6 @@
 author_name="$(git show --format=%an -s)"
 author_email="$(git show --format=%ae -s)"
 
-echo "::set-output name=name::"$author_name""
-echo "::set-output name=email::"$author_email""
-
 echo "::group::Set committer"
 echo "git config user.name $author_name"
 git config user.name $author_name
