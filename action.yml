@@ -9,18 +9,48 @@ runs:
   steps:
     - name: setting the committer name and email
       id: committer
-      run: bash $GITHUB_ACTION_PATH/set_committer.sh
       shell: bash
+      run: |
+        author_name="$(git show --format=%an -s)"
+        author_email="$(git show --format=%ae -s)"
+        echo "::group::Set committer"
+        echo "git config user.name $author_name"
+        git config user.name $author_name
+        echo "git config user.email $author_email"
+        git config user.email $author_email
+        echo "::endgroup::"
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
-      run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
       shell: bash
+      run: |
+        echo "::group::Checking if gh-pages branch exists"
+        if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
+           echo "Creating gh-pages branch"
+           git checkout --orphan gh-pages
+           git reset --hard
+           git commit --allow-empty -m "First commit to create gh-pages branch"
+           git push origin gh-pages
+           git checkout main
+           echo "Created gh-pages branch"
+        else
+           echo "Branch gh-pages already exists"
+        fi
+        echo "::endgroup::"
     - name: sphinx html docs compilation
+      shell: bash -l {0}      # This is needed to work with conda here. See:https://github.com/marketplace/actions/setup-miniconda#IMPORTANT
       working-directory: ./docs
-      run: bash $GITHUB_ACTION_PATH/sphinx.sh
-      shell: bash
+      run: |
+        echo ::group::Sphinx docs compilation
+        make html
+        echo ::endgroup::
     - name: pushing to gh-pages
-      working-directory: ./docs
-      run: bash $GITHUB_ACTION_PATH/to_gh-pages.sh
       shell: bash
+      working-directory: ./docs
+      run: |
+        echo ::group::Push to gh-pages
+        git add .
+        git commit --allow-empty -m "From XXX"
+        git push origin gh-pages
+        echo ::endgroup::
+
 
