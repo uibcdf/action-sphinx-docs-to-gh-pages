@@ -4,6 +4,15 @@ author: "Diego Prada"
 branding:
   icon: "upload-cloud"
   color: "orange"
+inputs:
+  branch_with_docs:
+    description: Name of branch where sphinx documentation is located
+    required: true
+    default: 'main'
+  dir_docs:
+    description: Path where sphinx documentation is located
+    required: true
+    default: 'docs'
 runs:
   using: "composite"
   steps:
@@ -30,18 +39,22 @@ runs:
            git reset --hard
            git commit --allow-empty -m "First commit to create gh-pages branch"
            git push origin gh-pages
-           git checkout main
            echo "Created gh-pages branch"
         else
            echo "Branch gh-pages already exists"
         fi
         echo "::endgroup::"
+    - name: Moving to branch where sphinx docs are located
+      id: to-branch-with-docs
+      shell: bash
+      run: |
+           git checkout ${{ inputs.branch_with_docs }}
     - name: sphinx html docs compilation
       shell: bash -l {0}      # This is needed to work with conda here. See:https://github.com/marketplace/actions/setup-miniconda#IMPORTANT
-      working-directory: ./docs
+      working-directory: ./${{ inputs.dir_docs }}
       run: |
         echo ::group::Sphinx docs compilation
-        make html
+        sphinx-build -M html . _build
         echo ::endgroup::
     - name: pushing to gh-pages
       shell: bash
@@ -53,14 +66,15 @@ runs:
             SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
         fi
         SHORT_SHA="$(git rev-parse --short $SHA)"
-        echo "#GitHub Pages" > docs/_build/html/README.md
-        echo "" >> docs/_build/html/README.md
-        echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> docs/_build/html/README.md
-        cat docs/_build/html/README.md
+        DIR_HTML=${{ inputs.dir_docs }}/_build/html/
+        echo "#GitHub Pages" > $DIR_HTML/README.md
+        echo "" >> $DIR_HTML/README.md
+        echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> $DIR_HTML/README.md
+        cat $DIR_HTML/README.md
         echo ::endgroup::
         echo ::group::Push to gh-pages
-        git add -f docs/_build/html
+        git add -f $DIR_HTML
         git commit -m "From $GITHUB_REF $SHA"
-        git push origin `git subtree split --prefix docs/_build/html main`:gh-pages --force
+        git push origin `git subtree split --prefix $DIR_HTML ${{ inputs.branch_with_docs }}`:gh-pages --force
         echo ::endgroup::
 

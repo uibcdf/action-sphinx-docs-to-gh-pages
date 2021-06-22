@@ -1,14 +1,15 @@
 # action-sphinx-docs-to-gh-pages
 GitHub Action: sphinx docs compilation, testing and deployment to github pages through the gh-pages branch.
 
-
 ## Requirements
 
 The following requirements are part of the common practices in the UIBCDF repositories, but they
 are mentioned here for the sake of clarity:
 
 - The principle branch in the repository is named "main".
+- The sphinx
 
+## Use
 
 ## Other tools like this one
 
