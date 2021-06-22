@@ -4,10 +4,10 @@ author_email="$(git show --format=%ae -s)"
 echo "::set-output name=name::"$author_name""
 echo "::set-output name=email::"$author_email""
 
-echo ::group::Set commiter
+echo "::group::Set committer"
 echo "git config user.name $author_name"
 git config user.name $author_name
 echo "git config user.email $author_email"
 git config user.email $author_email
-echo ::endgroup::
+echo "::endgroup::"
 

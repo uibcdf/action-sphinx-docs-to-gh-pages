@@ -1,8 +1,8 @@
 
 if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
    echo "Creating gh-pages branch"
-   git config --global user.email "prada.gracia@gmail.com"
-   git config --global user.name "Diego Prada"
+   git config --global user.email ${{ steps.committer.outputs.email }}
+   git config --global user.name ${{ steps.committer.outputs.name }}
    git checkout --orphan gh-pages
    git reset --hard
    git commit --allow-empty -m "First commit to create gh-pages branch"
