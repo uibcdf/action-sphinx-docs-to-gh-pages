@@ -14,6 +14,10 @@ runs:
       env:
          COMMITTER_NAME: ${{ steps.committer.outputs.name }}
          COMMITTER_EMAIL: ${{ steps.committer.outputs.email }}
+    - name: chequeo
+      id: chequeo
+      run: echo $COMMITTER_NAME
+      shell: bash
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
       run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
