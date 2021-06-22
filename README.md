@@ -4,8 +4,8 @@
 
 
 The sphinx documentation in a repository is automatically compiled as 'html' and deployed, by means
-of a gh-pages branch, with this GitHub Action. The user has only to be sure that the repository
-accomplishes a couple of requirements.
+of the 'gh-pages' branch, with this GitHub Action. The user has only to be sure that the repository
+accomplishes [a couple of requirements](#Requirements).
 
 This GitHub Action was developed by [the Computational Biology and Drug Design Research Unit -UIBCDF- at the
 Mexico City Children's Hospital Federico Gómez](https://www.uibcdf.org/). Other GitHub Actions can
@@ -23,12 +23,12 @@ check that no other branch is selected as source.
 
 The compilation of your sphinx documentation requires dependencies that can be solved with a
 temporary conda environment. Make sure that the repository has a Yaml file with the details to make
-this environment (see the section ["Documentation conda environment"][#Documentation-conda-environment]). 
+this environment (see the section ["Documentation conda environment"](#Documentation-conda-environment). 
 
 ## How to use it
 
-To include this GitHub Action in your repository, put a yaml file (named 'sphinx\_docs\_to\_gh\_pages.yaml', for instance) with the following content in the
-directory '.github/workflows':
+To include this GitHub Action, put a yaml file (named 'sphinx\_docs\_to\_gh\_pages.yaml', for instance) with the following content in the
+directory '.github/workflows' of your repository:
 
 ```yaml
 name: Sphinx docs to gh-pages
@@ -64,16 +64,32 @@ jobs:
 ```
 
 Two things need to be known to run the GitHub Actions without further work: the meaning of the input parameters
-and the environment file to make a temporary conda environment where the sphinx documentation can
+and the yaml file to make a temporary conda environment where the sphinx documentation can
 be compiled.
 
 ### Input parameters
+
+These are the input parameters of the action:
 
 | Input parameters | Description | Default value | 
 | ---------------- | ------------------------------------------- | ------------------------------------------------------ |
 | branch | Name of the branch where the sphinx documentation is located | 'main' |
 | dir\_docs | Path where the sphinx documentation is located | 'docs' |
 | sphinxopts | Compilation options for sphinx-build | '' |
+
+They are placed in the last three lines of the above workflow example file:
+
+```yaml
+      - name: Running the Sphinx to gh-pages Action
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@0.0.1-beta.25
+          with:
+            branch: main
+            dir_docs: docs
+            sphinxopts: ''
+```
+
+In case your sphinx documentation is placed in a directory named 'docs' in the 'main' branch to be
+compiled with no further options, you can do without the section `with:`.
 
 ### Documentation conda environment
 
@@ -127,21 +143,21 @@ thank the work of their developers. Many of those GitHub Actions were used by us
 If you think that your GitHub Action should be mentioned here, fell free to PR with a new line.
 
 ### Sphinx
-https://github.com/seanzhengw/sphinx-pages
-https://github.com/ammaraskar/sphinx-action
-https://github.com/rickstaa/action-sphinx-composite
+https://github.com/seanzhengw/sphinx-pages   
+https://github.com/ammaraskar/sphinx-action   
+https://github.com/rickstaa/action-sphinx-composite   
 
 ### GitHub Pages
-https://github.com/axetroy/gh-pages-action
-https://github.com/JamesIves/github-pages-deploy-action
-https://github.com/Cecilapp/GitHub-Pages-deploy
-https://github.com/ChristopherDavenport/create-ghpages-ifnotexists
-https://github.com/rdarida/simple-github-pages-deploy-action
-https://github.com/axetroy/gh-pages-action
-https://github.com/crazy-max/ghaction-github-pages
-https://github.com/peaceiris/actions-gh-pages
+https://github.com/axetroy/gh-pages-action   
+https://github.com/JamesIves/github-pages-deploy-action   
+https://github.com/Cecilapp/GitHub-Pages-deploy    
+https://github.com/ChristopherDavenport/create-ghpages-ifnotexists   
+https://github.com/rdarida/simple-github-pages-deploy-action   
+https://github.com/axetroy/gh-pages-action    
+https://github.com/crazy-max/ghaction-github-pages   
+https://github.com/peaceiris/actions-gh-pages   
 
 ### Shinx + GitHub Pages
-https://github.com/sphinx-notes/pages
-https://github.com/seanzhengw/sphinx-pages
+https://github.com/sphinx-notes/pages   
+https://github.com/seanzhengw/sphinx-pages   
 
