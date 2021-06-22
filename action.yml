@@ -13,6 +13,11 @@ inputs:
     description: Path where sphinx documentation is located
     required: true
     default: 'docs'
+  sphinxopts:
+    description: Compilation options for sphinx-build
+    required: true
+    default: ''
+
 runs:
   using: "composite"
   steps:
@@ -54,7 +59,7 @@ runs:
       working-directory: ./${{ inputs.dir_docs }}
       run: |
         echo ::group::Sphinx docs compilation
-        sphinx-build -M html . _build
+        sphinx-build -M html . _build ${{ inputs.sphinxopts }}
         echo ::endgroup::
     - name: pushing to gh-pages
       shell: bash
