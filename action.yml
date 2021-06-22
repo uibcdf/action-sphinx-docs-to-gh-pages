@@ -11,6 +11,9 @@ runs:
       id: committer
       run: bash $GITHUB_ACTION_PATH/set_committer.sh
       shell: bash
+      env:
+         COMMITTER_NAME: ${{ steps.committer.outputs.name }}
+         COMMITTER_EMAIL: ${{ steps.committer.outputs.email }}
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
       run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
