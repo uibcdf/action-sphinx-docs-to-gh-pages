@@ -45,12 +45,11 @@ runs:
         echo ::endgroup::
     - name: pushing to gh-pages
       shell: bash
-      working-directory: ./docs
       run: |
         echo ::group::Push to gh-pages
-        git add .
+        git add docs/_build/html
         git commit --allow-empty -m "From XXX"
-        git push origin gh-pages
+        git subtree push --prefix docs/_build/html origin gh-pages
         echo ::endgroup::
 
 
