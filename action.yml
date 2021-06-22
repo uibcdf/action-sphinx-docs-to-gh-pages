@@ -47,7 +47,7 @@ runs:
       shell: bash
       run: |
         echo ::group::Push to gh-pages
-        git add docs/_build/html
+        git add -f docs/_build/html
         git commit --allow-empty -m "From XXX"
         git subtree push --prefix docs/_build/html origin gh-pages
         echo ::endgroup::
