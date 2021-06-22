@@ -15,13 +15,4 @@ runs:
       id: gh-pages-branch-creation
       run: bash $GITHUB_ACTION_PATH/gh-pages_branch.sh
       shell: bash
-    - name: make conda environment
-      id: conda-env
-      uses: conda-incubator/setup-miniconda@v2    # https://github.com/conda-incubator/setup-miniconda
-      with:
-        environment-file: devtools/conda-envs/docs_env.yaml
-        activate-environment: docs
-        auto-update-conda: false
-        auto-activate-base: false
-        show-channel-urls: true
 
