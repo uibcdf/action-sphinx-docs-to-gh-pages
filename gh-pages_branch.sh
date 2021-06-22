@@ -1,8 +1,5 @@
 echo "::group::Checking if gh-pages branch exists"
 
-
-echo $COMMITTER_NAME
-
 if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
    echo "Creating gh-pages branch"
    git checkout --orphan gh-pages
