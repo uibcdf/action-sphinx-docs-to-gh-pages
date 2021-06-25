@@ -48,8 +48,6 @@ on:
   pull_request:
     branches: [ main ]
 
-  workflow_dispatch:
-
 jobs:
   sphinx_docs_to_gh-pages:
     runs-on: ubuntu-latest
