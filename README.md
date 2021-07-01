@@ -58,8 +58,8 @@ jobs:
       - name: Make conda environment
         uses: conda-incubator/setup-miniconda@v2
         with:
+          python-version: 3.7
           environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
-          activate-environment: docs
           auto-update-conda: false
           auto-activate-base: false
           show-channel-urls: true
