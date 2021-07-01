@@ -44,9 +44,10 @@ name: Sphinx docs to gh-pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
+
+# workflow_dispatch:        # Un comment line if you also want to trigger action manually
 
 jobs:
   sphinx_docs_to_gh-pages:
