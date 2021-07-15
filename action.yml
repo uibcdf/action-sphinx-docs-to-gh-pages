@@ -42,7 +42,8 @@ runs:
            echo "Creating gh-pages branch"
            git checkout --orphan gh-pages
            git reset --hard
-           git commit --allow-empty -m "First commit to create gh-pages branch"
+           touch .nojekyll
+           git commit -am "First commit to create gh-pages branch"
            git push origin gh-pages
            echo "Created gh-pages branch"
         else
