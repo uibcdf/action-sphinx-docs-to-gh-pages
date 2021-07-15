@@ -77,6 +77,9 @@ runs:
         echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> $DIR_HTML/README.md
         cat $DIR_HTML/README.md
         echo ::endgroup::
+        echo ::group::Create .nojekyll in case 'sphinx.ext.githubpages' is not used
+        touch $DIR_HTML/.nojekyll
+        echo ::endgroup::
         echo ::group::Push to gh-pages
         git add -f $DIR_HTML
         git commit -m "From $GITHUB_REF $SHA"
