@@ -42,7 +42,7 @@ runs:
            echo "Creating gh-pages branch"
            git checkout --orphan gh-pages
            git reset --hard
-           touch .nojekyll
+           touch .nojekyll # In case 'sphinx.ext.githubpages' is not loaded in the sphinx conf.py file
            git commit -am "First commit to create gh-pages branch"
            git push origin gh-pages
            echo "Created gh-pages branch"
