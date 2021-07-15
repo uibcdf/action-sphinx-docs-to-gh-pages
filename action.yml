@@ -42,7 +42,6 @@ runs:
            echo "Creating gh-pages branch"
            git checkout --orphan gh-pages
            git reset --hard
-           touch .nojekyll # In case 'sphinx.ext.githubpages' is not loaded in the sphinx conf.py file
            git commit -am "First commit to create gh-pages branch"
            git push origin gh-pages
            echo "Created gh-pages branch"
@@ -77,6 +76,7 @@ runs:
         echo "" >> $DIR_HTML/README.md
         echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> $DIR_HTML/README.md
         cat $DIR_HTML/README.md
+        touch $DIR_HTML/.nojekyll # In case 'sphinx.ext.githubpages' is not loaded in the sphinx conf.py file
         echo ::endgroup::
         echo ::group::Push to gh-pages
         git add -f $DIR_HTML
