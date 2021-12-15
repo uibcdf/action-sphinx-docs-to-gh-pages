@@ -71,10 +71,10 @@ jobs:
           python setup.py install
       - name: Running the Sphinx to gh-pages Action
         uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0-beta.2
-          with:
-            branch: main
-            dir_docs: docs
-            sphinxopts: ''
+        with:
+          branch: main
+          dir_docs: docs
+          sphinxopts: ''
 ```
 
 Two things need to be known to run the GitHub Actions without further work: the meaning of the input parameters
