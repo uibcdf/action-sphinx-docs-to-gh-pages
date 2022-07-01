@@ -13,6 +13,14 @@ inputs:
     description: Path where the sphinx documentation is located
     required: false
     default: 'docs'
+  sphinxapiexclude:
+    description: Files/directories to exclude from sphinx-apidoc
+    require: false
+    default: '*setup* tests*'
+  sphinxapiopts:
+    description: Options for sphinx-apidoc (default outputs to dir_docs and searches for modules one level up)
+    require: false
+    default: '-o . ../'
   sphinxopts:
     description: Compilation options for sphinx-build
     required: false
@@ -54,6 +62,13 @@ runs:
       shell: bash
       run: |
            git checkout ${{ inputs.branch }}
+    - name: sphinx apidoc generation
+      shell: bash -l {0}
+      working-directory: ./${{ inputs.dir_docs }}
+      run: |
+        echo ::group::Sphinx apidocs generation
+        sphinx-apidoc ${{ inputs.sphinxapiopts }}  ${{ inputs.sphinxapiexclude }}
+        echo ::endgroup::
     - name: sphinx html docs compilation
       shell: bash -l {0}      # This is needed to work with conda here. See:https://github.com/marketplace/actions/setup-miniconda#IMPORTANT
       working-directory: ./${{ inputs.dir_docs }}
@@ -85,4 +100,3 @@ runs:
         git commit -m "From $GITHUB_REF $SHA"
         git push origin `git subtree split --prefix $DIR_HTML ${{ inputs.branch }}`:gh-pages --force
         echo ::endgroup::
-
