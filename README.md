@@ -4,8 +4,9 @@
 
 
 The [Sphinx](https://www.sphinx-doc.org/en/master/) documentation in a repository is automatically compiled as 'html'
-and deployed, by means of the `gh-pages` branch, with this GitHub Action. The user has only to be sure that the
-repository accomplishes [a couple of requirements](#Requirements).
+and deployed, by means of the `gh-pages` branch, with this [GitHub Actions](https://github.com/features/actions) to
+[GitHub Pages](https://pages.github.com/). The user has only to be sure that the repository accomplishes [a couple of
+requirements](#Requirements).
 
 In summary, this GitHub action does the following:
 
@@ -36,7 +37,7 @@ this environment (see the section ["Documentation conda environment"](#Documenta
 
 ## How to use it
 
-To include this GitHub Action, put a [YAML](https://yaml.org/) file (named `sphinx_docs_to_gh_pages.yaml`, for instance)
+To include this GitHub Action, create a [YAML](https://yaml.org/) file (named `sphinx_docs_to_gh_pages.yaml`, for instance)
 with the following content in the directory `.github/workflows` of your repository:
 
 ```yaml
@@ -228,3 +229,5 @@ If you think that your GitHub Action should be mentioned here, fell free to PR w
 
 * [GitHub Pages](https://pages.github.com/)
 * [GitHub Actions](https://github.com/features/actions)
+* [Sphinx](https://www.sphinx-doc.org/en/master/)
+* [YAML](https://yaml.org/)
