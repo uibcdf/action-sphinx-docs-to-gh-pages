@@ -61,7 +61,7 @@ jobs:
       - name: Make conda environment
         uses: conda-incubator/setup-miniconda@v2
         with:
-          python-version: 3.7    # Python version to build the html sphinx documentation
+          python-version: 3.9    # Python version to build the html sphinx documentation
           environment-file: devtools/conda-envs/docs_env.yaml    # Path to the documentation conda environment
           auto-update-conda: false
           auto-activate-base: false
@@ -71,7 +71,7 @@ jobs:
         run: |
           python setup.py install
       - name: Running the Sphinx to gh-pages Action
-        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0.0
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.1.0
         with:
           branch: main
           dir_docs: docs
@@ -99,7 +99,7 @@ They are placed in the last lines of the above workflow example file:
 
 ```yaml
       - name: Running the Sphinx to gh-pages Action
-        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.0.0
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v1.1.0
           with:
             branch: main
             dir_docs: docs
