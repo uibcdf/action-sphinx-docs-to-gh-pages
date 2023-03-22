@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Sphinx docs to gh-pages
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Make conda environment
@@ -135,7 +135,7 @@ dependencies:
 
   # Write here all dependencies to compile the sphinx documentation.
   # This list is just an example
-  - python=3.7
+  - python=3.9
   - sphinx
   - sphinx_rtd_theme
   - sphinxcontrib-bibtex
