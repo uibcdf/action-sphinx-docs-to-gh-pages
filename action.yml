@@ -69,7 +69,6 @@ runs:
     - name: sphinx apidoc generation
       shell: bash -l {0}
       working-directory: ./${{ inputs.dir_docs }}
-      if: ${{ inputs.sphinx-apidoc == false }}
       run: |
         echo ::group::Sphinx apidocs generation
         if "${{ inputs.sphinx-apidoc }}"; then
