@@ -13,15 +13,19 @@ inputs:
     description: Path where the sphinx documentation is located
     required: false
     default: 'docs'
-  sphinxapiexclude:
+  sphinx-apidoc:
+    description: With sphinx-apidoc
+    required: false
+    default: true
+  sphinx-apidoc-exclude:
     description: Files/directories to exclude from sphinx-apidoc
     require: false
     default: '*setup* tests*'
-  sphinxapiopts:
+  sphinx-apidoc-opts:
     description: Options for sphinx-apidoc (default outputs to dir_docs and searches for modules one level up)
     require: false
     default: '-o . ../'
-  sphinxopts:
+  sphinx-opts:
     description: Compilation options for sphinx-build
     required: false
     default: ''
@@ -65,16 +69,21 @@ runs:
     - name: sphinx apidoc generation
       shell: bash -l {0}
       working-directory: ./${{ inputs.dir_docs }}
+      if: ${{ inputs.sphinx-apidoc == false }}
       run: |
         echo ::group::Sphinx apidocs generation
-        sphinx-apidoc ${{ inputs.sphinxapiopts }}  ${{ inputs.sphinxapiexclude }}
+        if "${{ inputs.sphinx-apidoc }}"; then
+          sphinx-apidoc ${{ inputs.sphinx-apidoc-opts }}  ${{ inputs.sphinx-apidoc-exclude }}
+        else
+          echo "Step disabled"
+        fi
         echo ::endgroup::
     - name: sphinx html docs compilation
       shell: bash -l {0}      # This is needed to work with conda here. See:https://github.com/marketplace/actions/setup-miniconda#IMPORTANT
       working-directory: ./${{ inputs.dir_docs }}
       run: |
         echo ::group::Sphinx docs compilation
-        sphinx-build -M html . _build ${{ inputs.sphinxopts }}
+        sphinx-build -M html . _build ${{ inputs.sphinx-opts }}
         echo ::endgroup::
     - name: pushing to gh-pages
       shell: bash
@@ -83,10 +92,14 @@ runs:
         SHA=$GITHUB_SHA
         echo "$SHA $GITHUB_EVENT_NAME"
         if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+          SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
         fi
         SHORT_SHA="$(git rev-parse --short $SHA)"
-        DIR_HTML=${{ inputs.dir_docs }}/_build/html/
+        if [ ${{ inputs.dir_docs }} == "." ]; then
+          DIR_HTML=_build/html/
+        else
+          DIR_HTML=${{ inputs.dir_docs }}/_build/html/
+        fi
         echo "#GitHub Pages" > $DIR_HTML/README.md
         echo "" >> $DIR_HTML/README.md
         echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> $DIR_HTML/README.md
