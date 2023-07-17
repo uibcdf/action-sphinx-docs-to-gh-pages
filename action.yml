@@ -9,6 +9,10 @@ inputs:
     description: Name of the branch where the sphinx documentation is located
     required: false
     default: 'main'
+  branch-checkout-args:
+    description: Arguments to pass to `git checkout`: `git checkout ${checkout-args} "${branch}"`
+    required: false
+    default: ''
   dir_docs:
     description: Path where the sphinx documentation is located
     required: false
@@ -40,17 +44,17 @@ runs:
         author_name="$(git show --format=%an -s)"
         author_email="$(git show --format=%ae -s)"
         echo "::group::Set committer"
-        echo "git config user.name $author_name"
-        git config user.name $author_name
-        echo "git config user.email $author_email"
-        git config user.email $author_email
+        echo "#git config user.name '$author_name'"
+        git config user.name "$author_name"
+        echo "#git config user.email '$author_email'"
+        git config user.email "$author_email"
         echo "::endgroup::"
     - name: gh-pages branch creation if needed
       id: gh-pages-branch-creation
       shell: bash
       run: |
         echo "::group::Checking if gh-pages branch exists"
-        if [[ -z $(git ls-remote --heads origin gh-pages) ]]; then
+        if [[ -z "$(git ls-remote --heads origin gh-pages)" ]]; then
            echo "Creating gh-pages branch"
            git checkout --orphan gh-pages
            git reset --hard
@@ -65,7 +69,7 @@ runs:
       id: to-branch-with-docs
       shell: bash
       run: |
-           git checkout ${{ inputs.branch }}
+           git checkout ${{ inputs.branch-checkout-args }} "${{ inputs.branch }}"
     - name: sphinx apidoc generation
       shell: bash -l {0}
       working-directory: ./${{ inputs.dir_docs }}
@@ -91,24 +95,24 @@ runs:
         SHA=$GITHUB_SHA
         echo "$SHA $GITHUB_EVENT_NAME"
         if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-          SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+          SHA=$(cat "$GITHUB_EVENT_PATH" | jq -r .pull_request.head.sha)
         fi
-        SHORT_SHA="$(git rev-parse --short $SHA)"
-        if [ ${{ inputs.dir_docs }} == "." ]; then
-          DIR_HTML=_build/html/
+        SHORT_SHA="$(git rev-parse --short "$SHA")"
+        if [ "${{ inputs.dir_docs }}" == "." ]; then
+          DIR_HTML="_build/html/"
         else
-          DIR_HTML=${{ inputs.dir_docs }}/_build/html/
+          DIR_HTML="${{ inputs.dir_docs }}/_build/html/"
         fi
-        echo "#GitHub Pages" > $DIR_HTML/README.md
-        echo "" >> $DIR_HTML/README.md
-        echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> $DIR_HTML/README.md
-        cat $DIR_HTML/README.md
+        echo "#GitHub Pages" > "$DIR_HTML/README.md"
+        echo "" >> "$DIR_HTML/README.md"
+        echo "Last update of sphinx html documentation from [$SHORT_SHA](https://github.com/$GITHUB_REPOSITORY/tree/$SHA)" >> "$DIR_HTML/README.md"
+        cat "$DIR_HTML/README.md"
         echo ::endgroup::
         echo ::group::Create .nojekyll in case 'sphinx.ext.githubpages' is not used
-        touch $DIR_HTML/.nojekyll
+        touch "$DIR_HTML"/.nojekyll
         echo ::endgroup::
         echo ::group::Push to gh-pages
-        git add -f $DIR_HTML
+        git add -f "$DIR_HTML"
         git commit -m "From $GITHUB_REF $SHA"
-        git push origin `git subtree split --prefix $DIR_HTML ${{ inputs.branch }}`:gh-pages --force
+        git push origin `git subtree split --prefix "$DIR_HTML" "${{ inputs.branch }}"`:gh-pages --force
         echo ::endgroup::
