@@ -71,7 +71,7 @@ jobs:
         run: |
           python setup.py install
       - name: Running the Sphinx to gh-pages Action
-        uses: uibcdf/action-sphinx-docs-to-gh-pages@v2.0.0
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v2.1.0
         with:
           branch: main
           dir_docs: docs
@@ -99,7 +99,7 @@ They are placed in the last lines of the above workflow example file:
 
 ```yaml
       - name: Running the Sphinx to gh-pages Action
-        uses: uibcdf/action-sphinx-docs-to-gh-pages@v2.0.0
+        uses: uibcdf/action-sphinx-docs-to-gh-pages@v2.1.0
           with:
             branch: main
             dir_docs: docs
