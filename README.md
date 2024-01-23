@@ -222,6 +222,10 @@ If you think that your GitHub Action should be mentioned here, fell free to PR w
 * [ghaction-github-pages](https://github.com/crazy-max/ghaction-github-pages)
 * [actions-gh-pages](https://github.com/peaceiris/actions-gh-pages)
 
+### GitHub Push
+
+* [github-push-action](https://github.com/ad-m/github-push-action)
+
 ### Shinx + GitHub Pages
 
 * [pages](https://github.com/sphinx-notes/pages)
