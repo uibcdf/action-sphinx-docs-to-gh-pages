@@ -75,9 +75,9 @@ jobs:
         with:
           branch: main
           dir_docs: docs
-          sphinxapiopts: '--separate -o . ../'
-          sphinxapiexclude: '../*setup* ../*.ipynb'
-          sphinxopts: ''
+          sphinx-apidoc-opts: '--separate -o . ../'
+          sphinx-apidoc-exclude: '../*setup* ../*.ipynb'
+          sphinx-opts: ''
 ```
 
 Two things need to be known to run the GitHub Actions without further work: the meaning of the input parameters and the
@@ -87,13 +87,15 @@ YAML file to make a temporary Conda environment where the sphinx documentation c
 
 These are the input parameters of the action:
 
-| Input parameters   | Description                                                                                         | Default value    |
-|--------------------|-----------------------------------------------------------------------------------------------------|------------------|
-| `branch`           | Name of the branch where the sphinx documentation is located                                        | `main`           |
-| `dir\_docs`        | Path where the sphinx documentation is located                                                      | `docs`           |
-| `sphinxopts`       | Compilation options for sphinx-build                                                                | '-o . ../'       |
-| `spinxapiopts`     | Options passed to `sphinx-apidoc`, typically the output directory and location to look for modules. | ''               |
-| `sphinxapiexclude` | Files to be excluded from API documentation generation, by default `tests/` are excluded.           | `*setup* tests*` |
+| Input parameters        | Description                                                                                         | Default value    |
+|-------------------------|-----------------------------------------------------------------------------------------------------|------------------|
+| `branch`                | Name of the branch where the sphinx documentation is located                                        | `main`           |
+| `branch-checkout-args`  | Arguments to pass to `git checkout`: `git checkout ${checkout-args} "${branch}"`                    | ''               |
+| `dir_docs`              | Path where the sphinx documentation is located                                                      | `docs`           |
+| `sphinx-apidoc`         | With sphinx-apidoc                                                                                  | true             |
+| `sphinx-apidoc-exclude` | With sphinx-apidoc                                                                                  | `*setup* tests*` |
+| `sphinx-apidoc-opts`    | Options for sphinx-apidoc (default outputs to dir_docs and searches for modules one level up)       | '-o . ../'       |
+| `sphinx-opts`           | Compilation options for sphinx-build                                                                | ''               |
 
 They are placed in the last lines of the above workflow example file:
 
@@ -103,9 +105,9 @@ They are placed in the last lines of the above workflow example file:
           with:
             branch: main
             dir_docs: docs
-            sphinxopts: ''
-            sphinxapiopts: '--separate -o . ../'
-            sphinxapiexclude: '../*.ipynb'
+            sphinx-opts: ''
+            sphinx-apidoc-opts: '--separate -o . ../'
+            sphinx-apidoc-exclude: '../*.ipynb'
 ```
 
 In case your sphinx documentation is placed in a directory named 'docs' in the 'main' branch to be
