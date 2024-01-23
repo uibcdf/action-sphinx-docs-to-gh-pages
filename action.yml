@@ -10,7 +10,8 @@ inputs:
     required: false
     default: 'main'
   branch-checkout-args:
-    description: Arguments to pass to `git checkout`: `git checkout ${checkout-args} "${branch}"`
+    description: >-
+      Arguments to pass to `git checkout`: `git checkout ${checkout-args} "${branch}"`
     required: false
     default: ''
   dir_docs:
