@@ -51,6 +51,18 @@ Mexico City Children's Hospital Federico Gómez](https://www.uibcdf.org/) (see a
 [Contributers](https://github.com/uibcdf/action-sphinx-docs-to-gh-pages/graphs/contributors)). Other GitHub Actions can
 be found at [the UIBCDF GitHub site](https://github.com/search?q=topic%3Agithub-actions+org%3Auibcdf&type=Repositories).
 
+## UIBCDF support infrastructure and feedback
+
+This action is UIBCDF-owned development infrastructure used by MOLI components; it is
+cataloged in [MOLI's support-infrastructure guide](https://github.com/uibcdf/moli/blob/main/devguide/governance/support_infrastructure.md).
+It is not a scientific MOLI component. Report action defects, missing behavior and
+improvement proposals in [this repository's issues](https://github.com/uibcdf/action-sphinx-docs-to-gh-pages/issues),
+or add evidence to an existing issue. Link blocked consumer work. A change to MOLI-wide
+documentation rules belongs in [MOLI issues](https://github.com/uibcdf/moli/issues);
+suite-specific adoption belongs in [MolSysSuite issues](https://github.com/uibcdf/molsyssuite/issues).
+Keep sensitive evidence out of public issues; use private security reporting for
+exploitable findings. Filing feedback does not promise immediate delivery.
+
 ## Requirements
 
 ### GitHub Pages taking the source from the branch gh-pages
